@@ -1,10 +1,13 @@
 import { Component } from 'react';
 
-// class Count extends Component {
-//   constructor(props, amount) {
-//     super(props)
-//   }
-// }
+class Count extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <p>Current Todo Count: {this.props.todos.length}</p>;
+  }
+}
 
 class ClassInput extends Component {
   constructor(props) {
@@ -73,6 +76,7 @@ class ClassInput extends Component {
             </li>
           ))}
         </ul>
+        <Count todos={this.state.todos} />
       </section>
     );
   }
