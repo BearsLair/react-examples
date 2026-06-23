@@ -14,12 +14,16 @@ class ClassInput extends Component {
     super(props);
 
     this.state = {
-      todos: ['Just some demo tasks', 'As an example'],
+      todos: [
+        { task: 'Just some demo tasks', editMode: false },
+        { task: 'As an example', editMode: false },
+      ],
       inputVal: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleInputChange(e) {
@@ -28,6 +32,10 @@ class ClassInput extends Component {
       inputVal: e.target.value,
     }));
   }
+
+  // handleEditTodo(todo) {
+  //   // Find index of indiviual todo in todos array
+  // }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -39,7 +47,8 @@ class ClassInput extends Component {
 
   handleDelete(todo) {
     this.setState((state) => {
-      let index = state.todos.indexOf(todo);
+      let index = state.todos.findIndex((item) => item.task === todo);
+      console.log('index to delete, ', index);
       let updatedTodos = [
         ...state.todos.slice(0, index),
         ...state.todos.slice(index + 1),
@@ -68,9 +77,17 @@ class ClassInput extends Component {
         {/* The list of all the To-Do's, displayed */}
         <ul>
           {this.state.todos.map((todo) => (
-            <li key={todo}>
-              {todo}
-              <button type="button" onClick={() => this.handleDelete(todo)}>
+            <li
+              // onClick={() => {
+              //   handleEditTodo(todo);
+              // }}
+              key={todo.task}
+            >
+              {todo.task}
+              <button
+                type="button"
+                onClick={() => this.handleDelete(todo.task)}
+              >
                 Delete
               </button>
             </li>
