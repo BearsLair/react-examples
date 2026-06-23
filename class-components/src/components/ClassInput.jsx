@@ -1,5 +1,11 @@
 import { Component } from 'react';
 
+// class Count extends Component {
+//   constructor(props, amount) {
+//     super(props)
+//   }
+// }
+
 class ClassInput extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +34,18 @@ class ClassInput extends Component {
     }));
   }
 
+  handleDelete(todo) {
+    this.setState((state) => {
+      let index = state.todos.indexOf(todo);
+      let updatedTodos = [
+        ...state.todos.slice(0, index),
+        ...state.todos.slice(index + 1),
+      ];
+
+      return { todos: updatedTodos };
+    });
+  }
+
   render() {
     return (
       <section>
@@ -47,7 +65,12 @@ class ClassInput extends Component {
         {/* The list of all the To-Do's, displayed */}
         <ul>
           {this.state.todos.map((todo) => (
-            <li key={todo}>{todo}</li>
+            <li key={todo}>
+              {todo}
+              <button type="button" onClick={() => this.handleDelete(todo)}>
+                Delete
+              </button>
+            </li>
           ))}
         </ul>
       </section>
