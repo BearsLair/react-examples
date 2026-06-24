@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite $INIT_CWD -c ./vite.config.js",
-    "lint": "eslint $INIT_CWD --fix || prettier $INIT_CWD --write"
+    "lint": "eslint $INIT_CWD --fix || prettier $INIT_CWD --write",
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -22,12 +23,16 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "jsdom": "^29.1.1",
     "prettier": "2.7.1",
-    "vite": "^8.0.14"
+    "vite": "^8.0.14",
+    "vitest": "^4.1.9"
   }
 }
