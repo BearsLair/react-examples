@@ -51,6 +51,8 @@ class ClassInput extends Component {
       let todosCopy = [...state.todos];
       todosCopy[index].editMode = true;
 
+      console.log({ ...state, todos: todosCopy });
+
       return { ...state, todos: todosCopy };
     });
   }
@@ -59,9 +61,8 @@ class ClassInput extends Component {
     this.setState((state) => {
       let index = state.todos.findIndex((item) => item.task === todo);
       let todosCopy = [...state.todos];
-      console.log('todosCopy, ', todosCopy);
-      todosCopy[index].task = state.editInputValue;
-      todosCopy[index].editMode = false;
+
+      todosCopy[index] = { task: state.editInputValue, editMode: false };
 
       return { ...state, todos: todosCopy, editInputValue: '' };
     });
@@ -83,7 +84,7 @@ class ClassInput extends Component {
         ...state.todos.slice(index + 1),
       ];
 
-      return { todos: updatedTodos };
+      return { ...state, todos: updatedTodos };
     });
   }
 
@@ -106,9 +107,9 @@ class ClassInput extends Component {
         {/* The list of all the To-Do's, displayed */}
         <ul>
           {this.state.todos.map((todo) => (
-            <li key={todo.task} onClick={() => this.enterEditMode(todo.task)}>
+            <li key={todo.task}>
               {!todo.editMode ? (
-                todo.task
+                <p onClick={() => this.enterEditMode(todo.task)}>{todo.task}</p>
               ) : (
                 <input
                   type="text"

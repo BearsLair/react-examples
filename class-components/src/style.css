@@ -53,11 +53,16 @@ ul {
 }
 
 li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   width: 100%;
   font-family: 'Merriweather', serif;
+  cursor: pointer;
 }
 
 button {
+  height: 2rem;
   margin-left: 1rem;
   padding: 0.35rem;
   background-color: rgb(255, 255, 255);
