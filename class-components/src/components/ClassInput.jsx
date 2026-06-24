@@ -19,11 +19,16 @@ class ClassInput extends Component {
         { task: 'As an example', editMode: false },
       ],
       inputVal: '',
+      editInputValue: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleEditInput = this.handleEditInput.bind(this);
+    this.enterEditMode = this.enterEditMode.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.enterEditMode = this.enterEditMode.bind(this);
   }
 
   handleInputChange(e) {
@@ -33,9 +38,34 @@ class ClassInput extends Component {
     }));
   }
 
-  // handleEditTodo(todo) {
-  //   // Find index of indiviual todo in todos array
-  // }
+  handleEditInput(e) {
+    this.setState((state) => ({
+      ...state,
+      editInputValue: e.target.value,
+    }));
+  }
+
+  enterEditMode(todo) {
+    this.setState((state) => {
+      let index = state.todos.findIndex((item) => item.task === todo);
+      let todosCopy = [...state.todos];
+      todosCopy[index].editMode = true;
+
+      return { ...state, todos: todosCopy };
+    });
+  }
+
+  handleEdit(todo) {
+    this.setState((state) => {
+      let index = state.todos.findIndex((item) => item.task === todo);
+      let todosCopy = [...state.todos];
+      console.log('todosCopy, ', todosCopy);
+      todosCopy[index].task = state.editInputValue;
+      todosCopy[index].editMode = false;
+
+      return { ...state, todos: todosCopy, editInputValue: '' };
+    });
+  }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -48,7 +78,6 @@ class ClassInput extends Component {
   handleDelete(todo) {
     this.setState((state) => {
       let index = state.todos.findIndex((item) => item.task === todo);
-      console.log('index to delete, ', index);
       let updatedTodos = [
         ...state.todos.slice(0, index),
         ...state.todos.slice(index + 1),
@@ -77,19 +106,33 @@ class ClassInput extends Component {
         {/* The list of all the To-Do's, displayed */}
         <ul>
           {this.state.todos.map((todo) => (
-            <li
-              // onClick={() => {
-              //   handleEditTodo(todo);
-              // }}
-              key={todo.task}
-            >
-              {todo.task}
-              <button
-                type="button"
-                onClick={() => this.handleDelete(todo.task)}
-              >
-                Delete
-              </button>
+            <li key={todo.task} onClick={() => this.enterEditMode(todo.task)}>
+              {!todo.editMode ? (
+                todo.task
+              ) : (
+                <input
+                  type="text"
+                  placeholder={todo.task}
+                  value={this.state.editInputValue}
+                  onChange={this.handleEditInput}
+                ></input>
+              )}
+
+              {!todo.editMode ? (
+                <button
+                  type="button"
+                  onClick={() => this.handleDelete(todo.task)}
+                >
+                  Delete
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => this.handleEdit(todo.task)}
+                >
+                  ReSubmit
+                </button>
+              )}
             </li>
           ))}
         </ul>
